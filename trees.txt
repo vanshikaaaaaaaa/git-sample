@@ -1,0 +1,26 @@
+Count Leaves in Binary Tree
+
+ // Base case
+    if(root==NULL) return 0;
+    
+    // If the left and right is not pointing to someone 
+    // then return 1 as per given question
+    if(root->left==NULL and root->right==NULL) return 1;
+    
+    // Recursive calls
+    int left= countLeaves(root->left);
+    int right= countLeaves(root->right);
+    
+    // Return left leaves + right leaves count
+    return left+ right;
+  
+COUNT LEAF NODES
+
+
+  if(root == NULL) {
+           return 0;
+       }
+       if(root -> left == NULL && root->right == NULL) {
+           return 0;
+       }
+       return 1 + countNonLeafNodes(root->left) + countNonLeafNodes(root->right)

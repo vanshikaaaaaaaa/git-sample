@@ -1,0 +1,67 @@
+/27 june 2022/
+FIND FLOOR OF KEY IN BST
+
+1. Start at the root Node.
+2. If root->data == key, 
+     floor of the key is equal 
+     to the root.
+3. Else if root->data > key, then 
+     the floor of the key must lie in the
+     left subtree.
+4. Else floor may lie in the right subtree 
+  but only if there is a value lesser than 
+  or equal to the key. If not, then the root is
+  the key.
+
+void floorCeilBST(Node* root, int key{
+if(root)
+return -1
+int res=-1
+ while (root) { 
+  
+        if (root->data == key) { 
+            ceil = root->data; 
+            floor = root->data; 
+            return; 
+        } 
+  
+        if (key > root->data) { 
+            res=root; 
+            root = root->right; 
+        } 
+        else {  
+            root = root->left; 
+        } 
+    } 
+    return; 
+}
+Convert a normal BST to Balanced BST
+
+void inorder(Node * root,vector<int>&arr)
+{
+    if(!root)
+    return;
+    inorder(root->left,arr);
+    arr.push_back(root->data);
+    inorder(root->right,arr);
+}
+Node* buildBalancedTree(Node* root)
+{
+	// Code here
+	vector<int> arr;
+    inorder(root, arr);
+    
+    return buildBalancedBST(arr, 0,arr.size());
+	
+}
+Node * buildBalancedBST(vector<int>&arr,int start,int end)
+{ 
+    if(start>end)
+    return NULL;
+    int mid=(start+end)/2;
+    Node * root=new Node(arr[mid]);
+    root->left = buildBalancedBST(arr,start,mid-1);
+    root->right=buildBalancedBST(arr,mid+1,end);
+    
+    return root;
+}

@@ -1,0 +1,99 @@
+\ stack<int> tmpStack;
+  
+    while (!input.empty())
+    {
+        // pop out the first element
+        int tmp = input.top();
+        input.pop();
+  
+        // while temporary stack is not empty and top
+        // of stack is greater than temp
+        while (!tmpStack.empty() && tmpStack.top() > tmp)
+        {
+            // pop from temporary stack and push
+            // it to the input stack
+            input.push(tmpStack.top());
+            tmpStack.pop();
+        }
+  
+        // push temp in temporary of stack
+        tmpStack.push(tmp);
+    }
+  
+    return tmpStack;
+
+void deleteMid_util(stack<int>&s, int sizeOfStack, int curr)
+    {
+        //if current pointer is half of the size of stack then we 
+        //are accessing the middle element of stack.
+       if(curr==floor(sizeOfStack/2))
+       {
+        s.pop();return;
+       }
+       if(s.empty()  || curr==sizeOfStack)
+       return;
+        //storing the top element in a variable and popping it.
+        int x = s.top();
+        s.pop();
+        curr+=1;
+
+        //calling the function recursively.
+        deleteMid_util(s,sizeOfStack,curr);
+        
+        //pushing the elements (except middle element) back 
+        //into stack after recursion calls.
+       
+        s.push(x);
+    }
+    void deleteMid(stack<int>&s, int sizeOfStack)
+    {
+        deleteMid_util(s,sizeOfStack,0);
+    }
+
+
+
+        // Your code here
+        vector<long long> leftSmaller(n);
+        vector<long long> rightSmaller(n);
+        stack<long long> st;
+        
+        // Finding the Left Smaller 
+        for(auto i = 0; i < n; i++)
+        {
+            while(!st.empty() && arr[st.top()] >= arr[i])
+                st.pop();
+            //if no Nearest Smaller to Left exist the take -1(ground)
+            if(st.empty())
+                leftSmaller[i] = -1;
+            else
+                leftSmaller[i] = st.top();
+            st.push(i);
+        }
+        
+        // empty the stack
+        while(!st.empty())
+            st.pop();
+        
+        // Finding the Right Smaller 
+        for(auto i = n-1; i >= 0; i--)
+        {
+            while(!st.empty() && arr[st.top()] >= arr[i])
+                st.pop();
+            
+            // if no Next Smaller to Right exist the take n(ground)
+            if(st.empty())
+                rightSmaller[i] = n;
+            else
+                rightSmaller[i] = st.top();
+            st.push(i);
+        }
+        
+        // width = (NGR-NGL)-1 
+        long long maxArea = 0;
+        for(auto i = 0; i < n; i++){
+            maxArea = max(maxArea, arr[i] * (rightSmaller[i] - leftSmaller[i] - 1));
+        }
+        return maxArea;
+    }
+get  min problem
+celebrity problem
